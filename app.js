@@ -1,7 +1,7 @@
 import puppeteer from 'puppeteer';
 import Airtable from 'airtable';
 import cron from 'node-cron';
-
+console.log('hello')
 const base = new Airtable({
   apiKey: 'keyhc1LUeY7WXZ4HJ',
 }).base('appAwl2GocHFglKB1');
@@ -10,6 +10,7 @@ const scraper = async () => {
 	const links = [];
 
 	async function scrapeOne() {
+		console.log('ScrapeOne function started executing');
 		const baseUrl = 'https://www.schooljobs.com/careers/TacomaPublicSchools?&page=';
 		let pageNum = 1;
 		let pageUrl = baseUrl + pageNum; // Start with the first page
@@ -48,6 +49,7 @@ const scraper = async () => {
 	}
 
 	async function scrapeTwo() {
+		console.log('ScrapeTwo function started executing');
 		const baseUrl = 'https://upsdjobs.myschooldata.net/JobOpenings.aspx';
 		const browser = await puppeteer.launch();
 		const page = await browser.newPage();
@@ -84,6 +86,7 @@ const scraper = async () => {
 	}
 
 	async function scrapeThree() {
+		console.log('ScrapeThree function started executing')
 		const url = 'https://www.applitrack.com/Puyallupk12/onlineapp/default.aspx?all=1&AppliTrackPostingSearch=title%3Ateacher%20&AppliTrackZipRadius=5&AppliTrackSort=type&AppliTrackLayoutMode=detail';
 		const browser = await puppeteer.launch();
 		const page = await browser.newPage();
@@ -118,6 +121,7 @@ const scraper = async () => {
 	}
 
 	async function scrapeFour() {
+		console.log('ScrapeFour function started executing')
 		const url = 'https://kent.tedk12.com/hire/index.aspx';
 		const browser = await puppeteer.launch();
 		const page = await browser.newPage();
@@ -213,6 +217,13 @@ const scraper = async () => {
 		links: uniqueLinks
 	};
 };
+
+async function startScraper() {
+  console.log('Running the scraper');
+  await scraper();
+}
+
+startScraper(); // Call the scraper function on initial build
 
 cron.schedule('0 */12 * * *', async () => {
   console.log('Running the scraper every 12 hours');
